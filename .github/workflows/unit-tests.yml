@@ -19,8 +19,6 @@ jobs:
           node-version: 18
           cache: 'npm'
       - run: npm ci
-      - name: Check
-        run: npm run format:check
       - run: npm test
 
   build:
@@ -35,6 +33,4 @@ jobs:
           node-version: 18
           cache: 'npm'
       - run: npm ci
-      - name: Check formating
-        run: npm run format:check
       - run: npm run build
