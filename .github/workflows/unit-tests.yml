@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Fix formating
+        run: npm run format:fix
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -27,6 +29,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Fix formating
+        run: npm run format:fix
       - name: Setup Node
         uses: actions/setup-node@v3
         with:

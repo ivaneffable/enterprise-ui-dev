@@ -11,7 +11,7 @@ const hover = '300';
 const active = '400';
 const border = '700';
 
-const Button = ({ children, variant = 'secondary' }: ButtonProps) => {
+const Button = ({ children, variant = "secondary" }: ButtonProps) => {
   return (
     <button
       className={css`
