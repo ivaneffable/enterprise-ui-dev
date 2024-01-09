@@ -1,4 +1,4 @@
-import { render, screen } from 'test/utilities';
+import { render, screen, within } from 'test/utilities';
 import PackingList from '.';
 
 it('renders the Packing List application', () => {
@@ -10,19 +10,31 @@ it('has the correct title', async () => {
   screen.getByText('Packing List');
 });
 
-it.todo('has an input field for a new item', () => {});
+it('has an input field for a new item', () => {
+  render(<PackingList />);
+  expect(screen.getByLabelText(/new item name/i)).toBeInTheDocument();
+});
 
-it.todo(
-  'has a "Add New Item" button that is disabled when the input is empty',
-  () => {},
-);
+it('has a "Add New Item" button that is disabled when the input is empty', () => {
+  render(<PackingList />);
+  expect(screen.getByLabelText(/new item name/i)).toHaveValue('');
+  expect(screen.getByRole('button', { name: /add new item/i })).toBeDisabled();
+});
 
-it.todo(
-  'enables the "Add New Item" button when there is text in the input field',
-  async () => {},
-);
+it('enables the "Add New Item" button when there is text in the input field', async () => {
+  const { user } = render(<PackingList />);
+  const input = screen.getByLabelText(/new item name/i);
+  await user.type(input, 'Socks');
 
-it.todo(
-  'adds a new item to the unpacked item list when the clicking "Add New Item"',
-  async () => {},
-);
+  expect(screen.getByRole('button', { name: /add new item/i })).toBeEnabled();
+});
+
+it('adds a new item to the unpacked item list when the clicking "Add New Item"', async () => {
+  const { user } = render(<PackingList />);
+  const input = screen.getByLabelText(/new item name/i);
+  await user.type(input, 'Socks');
+  await user.click(screen.getByRole('button', { name: /add new item/i }));
+
+  const unpackedItems = screen.getByTestId('unpacked-items');
+  within(unpackedItems).getByText('Socks');
+});
